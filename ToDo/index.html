@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- <script defer src="./client.js"></script> -->
+<body>
+    <form action="/" id="form">
+        <input type="text" name="text" id="text">
+        <input type="submit" name="post" id="post">
+    </form>
+    <ul id="ul"></ul>
+</body>
+<script>
+    const form=document.getElementById('form')
+    const text=document.getElementById('text')
+    const ul=document.getElementById('ul')
+
+    window.addEventListener("load",()=>{
+        function getTodo(){
+            ul.innerHTML=''
+            fetch('http://localhost:3000/t',{
+                method : 'get'
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                for(let i=0;i<res.length;i++){
+                    const li=document.createElement("li")
+                    const a=document.createElement("a")
+                    const aa=document.createElement("a")
+
+                    a.href=`del/${res[i]._id}`
+                    aa.href=`put/${res[i]._id}`
+                    a.innerText=" Delete"
+                    aa.innerText=" Edit"
+
+                    li.innerText=res[i].title
+                    li.appendChild(a)
+                    li.appendChild(aa)
+                    ul.appendChild(li)
+                }
+            })
+        }
+
+        function postTodo(){
+            form.addEventListener("submit",e=>{
+                e.preventDefault()
+                fetch('http://localhost:3000/',{
+                    method : 'post',
+                    body : JSON.stringify({title:text.value}),
+                    headers : { "Content-Type" : "application/json; charset=utf-8" }
+                })
+                .then(res=>res.json())
+                .then(res=>{
+                    const li=document.createElement("li")
+                    const a=document.createElement("a")
+
+                    console.log(res)
+
+                    a.href=`del/${res.ops[0]._id}`
+                    a.innerText=" Delete"
+                    li.innerText=res.ops[0].title
+                    li.appendChild(a)
+                    ul.appendChild(li)
+                })
+                text.value=''
+            })
+        }
+
+        getTodo()
+        postTodo()
+    })
+</script>
+</html>

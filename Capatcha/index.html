@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <title>Subscribe Form</title>
+  </head>
+  <body>
+      <form id="subscribeForm" action="/capatcha" method="POST">
+          <div class="g-recaptcha" name="captcha" data-sitekey="6Lf9QMYZAAAAAN16rnRCZ0Ud1NycznlpsO_jEYwF"></div>
+        <input type="submit" value="Submit"/>
+    </form>
+  </body>
+
+    <script>
+      document.getElementById('subscribeForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const captcha = document.querySelector('#g-recaptcha-response').value;
+
+        fetch('/capatcha', {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify({captcha:captcha})
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) return location='/capatcha/secret'
+          });
+      });
+    </script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        const roomName = "<%= roomName %>"
+        console.log(roomName);
+    </script>
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="client.js"></script>
+</head>
+<style>
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    #div {
+      width: 80%;
+      max-width: 1200px;
+    }
+
+    #div .you {
+      background-color: #CCC;
+      padding: 5px;
+    }
+
+    #div .other {
+      background-color: #FFF;
+      padding: 5px;
+    }
+
+    #form {
+      position: fixed;
+      padding-bottom: 30px;
+      bottom: 0;
+      background-color: white;
+      max-width: 1200px;
+      width: 80%;
+      display: flex;
+    }
+
+    #text {
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="div"></div>
+  <form id="form">
+    <input type="text" id="text">
+    <button type="submit" id="button">Send</button>
+  </form>
+</body>
+</html>

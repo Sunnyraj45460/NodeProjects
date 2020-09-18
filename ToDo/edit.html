@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/put/:id" id="form">
+        <input type="text" name="text" id="text">
+        <input type="submit">
+    </form>
+</body>
+    <script defer>
+        const form=document.getElementById('form')
+        const text=document.getElementById('text')
+
+        window.addEventListener("load",()=>{
+            text.value=''
+            fetch('/put/:id',{
+                method : 'get'
+            })
+            .then(res=>{
+                    const a=document.createElement("a")
+
+                    a.href=`/`
+
+                    a.innerText=" Dee"
+                    document.body.appendChild(a)
+            })
+
+            form.addEventListener("submit",e=>{
+                e.preventDefault()
+                fetch('/put/:id',{
+                    method : 'put',
+                    body : JSON.stringify({title:text.value}),
+                    headers : { "Content-Type" : "application/json; charset=utf-8" }
+                })
+                .then(res=>res.json())
+                .then(res=>{
+
+                })
+                text.value=''
+            })
+        })
+    </script>
+</html>
